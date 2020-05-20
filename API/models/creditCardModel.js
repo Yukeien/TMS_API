@@ -2,29 +2,29 @@ const mongoose = require("mongoose");
 
 const creditCardSchema = new mongoose.Schema({
     cardHolderName: {
-        Type: String,
-        minLenght: 2,
-        maxLenght: 25,
+        type: String,
+        minLength: 2,
+        maxLength: 25,
         required: true
     },
     creditCardNumber: {
-        Type: Number,
-        minLenght: 7,
-        maxLenght: 16,
+        type: Number,
+        minLength: 7,
+        maxLength: 16,
         required: true
     },
     expirationDate: {
-        Type: Number,
+        type: Number,
         length: 4,
         required: true
     },
     CCV: {
-        Type: Number,
+        type: Number,
         length: 3,
         required: true
     },
     userID: { 
-        Type: String,
+        type: String,
         required: true
     }
 })
