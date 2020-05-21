@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
 
 const creditCardSchema = new mongoose.Schema({
+    creditCardName: {
+        type: String,
+        minLength: 2,
+        maxLength: 25,
+        required: true
+    },
     cardHolderName: {
         type: String,
         minLength: 2,
@@ -23,7 +29,7 @@ const creditCardSchema = new mongoose.Schema({
         length: 3,
         required: true
     },
-    userID: { 
+    userID: {
         type: String,
         required: true
     }

@@ -9,7 +9,7 @@ const creditCardController = require("../controllers/creditCardController")
  *   post:
  *     tags:
  *       - Credit Cards
- *     name: RegisterCard
+ *     name: RegisterCreditCard
  *     summary: Register a new credit card
  *     requestBody:
  *       required: true
@@ -18,6 +18,8 @@ const creditCardController = require("../controllers/creditCardController")
  *           schema:
  *             type: object
  *             properties:
+ *               creditCardName:
+ *                 type: string
  *               cardHolderName:
  *                 type: string
  *               creditCardNumber:
@@ -29,12 +31,14 @@ const creditCardController = require("../controllers/creditCardController")
  *               userID:
  *                 type: string
  *           example:
+ *             creditCardName: CurrentAccount
  *             cardHolderName: Jane
  *             creditCardNumber: 4321567890121234
  *             expirationDate: 0898
  *             CCV: 233
  *             userID: Example1234%
  *         required:
+ *           - creditCardName
  *           - cardHolderName
  *           - creditCardNumber
  *           - expirationDate
@@ -52,7 +56,7 @@ const creditCardController = require("../controllers/creditCardController")
  */
 router.post(
     "/credit-cards",
-    creditCardController.registerCard
+    creditCardController.registerCreditCard
 );
 
 /**
@@ -61,20 +65,47 @@ router.post(
  *   get:
  *     tags:
  *       - Credit Cards
- *     name: GetCards
+ *     name: GetCreditCards
  *     summary: Get user's credit cards
  *     responses:
- *       '201':
- *         description: Credit card successfully retrieved.
+ *       '200':
+ *         description: Credit card(s) successfully retrieved.
  *       '204':
  *         description: No credit card registered on this user account.
  *       '500':
  *         description: Unexpected error.
  */
-router.get("/credit-cards", creditCardController.getCard)
+router.get("/credit-cards", creditCardController.getCreditCard)
 
-// router.put("/credit-card", creditCardController.updateCard)
+// router.put("/credit-card", creditCardController.updateCreditCard)
 
-// router.delete("/credit-card", creditCardController.deleteCard);
+/**
+ * @swagger
+ * /credit-cards/{creditCardName}:
+ *   delete:
+ *     tags:
+ *       - Credit Cards
+ *     name: DeleteCreditCard
+ *     summary: Delete a credit card
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               creditCardName:
+ *                 type: string
+ *           example:
+ *             creditCardName: CompteCourant
+ *         required:
+ *           - creditCardName
+ *     responses:
+ *       '200':
+ *         description: Credit Card successfully deleted.
+ *       '500':
+ *         description: Unexpected error.
+ */
+router.delete("/credit-card", creditCardController.deleteCreditCard);
 
 module.exports = router;

@@ -1,9 +1,6 @@
 const CreditCard = require("../models/creditCardModel")
-// const jwt = require("jsonwebtoken");
 
-// const { jwtKey } = require("../../config");
-
-exports.registerCard = (req, res, next) => {
+exports.registerCreditCard = (req, res, next) => {
     const creditCardNumber = req.body.creditCardNumber;
     CreditCard.findOne({ creditCardNumber: creditCardNumber })
     .exec()
@@ -14,6 +11,7 @@ exports.registerCard = (req, res, next) => {
             });
         }
         const newCreditCard = new CreditCard({
+            creditCardName: req.body.creditCardName,
             cardHolderName: req.body.cardHolderName,
             creditCardNumber: req.body.creditCardNumber,
             expirationDate: req.body.expirationDate,
@@ -38,18 +36,7 @@ exports.registerCard = (req, res, next) => {
     });
 };
 
-/*    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-        var token = req.headers.authorization.split(' ')[1];
-        const userID = jwt.verify(token, jwtKey, function(err, decoded) {
-            return res.status(500).json({
-                error: err,
-            });
-        });
-        console.log(userID)
-    }
-*/
-
-exports.getCard = (req, res, next) => {
+exports.getCreditCard = (req, res, next) => {
     CreditCard.findById(req.user._id)
     .exec().then(creditCards => {
         if (!creditCards) {
@@ -61,14 +48,35 @@ exports.getCard = (req, res, next) => {
             return creditCards;
         }
     }).catch(err => {
-        return res.status(err.code).json({
-            error: err.message,
+        return res.status(500).json({
+            error: err,
         });
     });
 }
 
-exports.updateCard = (req, res, next) => {
+exports.updateCreditCard = (req, res, next) => {
+    CreditCard.findOneAndUpdate({ 'creditCardName' : req.body })
+    .then(result => {
+        return result.status(200).json({
+            message: "Credit Card successfully updated."
+        });
+    }).catch(err => {
+        return res.status(500).json({
+            error: err,
+        });
+    });
 }
 
-exports.deleteCard = (req, res, next) => {
+exports.deleteCreditCard = (req, res, next) => {
+    const creditCardName = req.body.creditCardName;
+    CreditCard.findOneAndDelete({ 'creditCardName' : creditCardName, 'userID': req.user._id })
+    .then(result => {
+        return result.status(200).json({
+            message: "Credit Card successfully deleted."
+        });
+    }).catch(err => {
+        return res.status(500).json({
+            error: err,
+        });
+    });
 }
