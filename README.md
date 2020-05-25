@@ -32,3 +32,7 @@ npm run dev
 ```
 
 It will launch the API on `localhost:3000`.
+
+### Reading Documentation
+
+Once the API is launched, access docs here: http://localhost:3000/api-docs/
