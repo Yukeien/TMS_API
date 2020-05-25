@@ -83,3 +83,27 @@ exports.login = (req, res, next) => {
       });
     });
 };
+
+exports.getProfile = (req, res, next) => {
+  const id = req.params.userId;
+  User.findById(id)
+    .select(
+      "-salt -hashedPassword -resetPasswordToken -resetPasswordExpires -__v -createdOn"
+    )
+    .exec()
+    .then(user => {
+      if (!user) {
+        return res.status(404).json({
+          message: "User " + id + " was not found",
+        });
+      } else {
+        return res.status(200).json(user);
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err,
+      });
+    });
+};

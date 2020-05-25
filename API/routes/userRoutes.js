@@ -5,6 +5,7 @@ const UserController = require("../controllers/userController");
 
 const validationSchemas = require("../models/validationSchema");
 const validation = require("../middlewares/validation");
+const auth = require("../middlewares/auth");
 
 /**
  * @swagger
@@ -123,5 +124,33 @@ router.post(
  *         description: Unexpected error.
  */
 router.post("/login", UserController.login);
+
+/**
+ * @swagger
+ * /users/{userId}:
+ *   get:
+ *     tags:
+ *       - Users
+ *     name: Get profile
+ *     summary: Get a user by ID
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *     responses:
+ *       '200':
+ *         description: Profile retrieved successfully.
+ *       '401':
+ *         description: Auth failed.
+ *       '403':
+ *         description: Non Authorized.
+ *       '404':
+ *         description: User was not found.
+ *       '500':
+ *         description: Unexpected error.
+ */
+router.get("/:userId", auth.isUser, UserController.getProfile);
 
 module.exports = router;
