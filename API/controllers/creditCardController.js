@@ -1,5 +1,5 @@
 const CreditCard = require("../models/creditCardModel")
-const Address = require("../models/adressModel")
+const Address = require("../models/addressModel")
 
 exports.registerCreditCard = (req, res, next) => {
     const creditCardNumber = req.body.creditCardNumber;
@@ -92,14 +92,14 @@ exports.updateCreditCard = (req, res, next) => {
 
 exports.deleteCreditCard = (req, res, next) => {
     const creditCardName = req.params.creditCardName;
-    CreditCard.findOneAndDelete({ 'creditCardName' : creditCardName, 'userID': req.user._id })
+    CreditCard.findOneAndDelete({ 'creditCardName' : creditCardName, 'user': res.locals.userId })
     .then(result => {
-        return result.status(200).json({
-            message: "Credit Card successfully deleted."
+        return res.status(200).json({
+            message: "Credit Card - " + result.creditCardName + " successfully deleted.",
         });
     }).catch(err => {
         return res.status(500).json({
-            error: err,
+            error: err.message,
         });
     });
 }

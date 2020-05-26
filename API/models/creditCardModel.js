@@ -53,7 +53,7 @@ const creditCardSchema = new mongoose.Schema({
     }
 })
 
-const Address = require('./adressModel')
+const Address = require('./addressModel')
 const User = require("./userModel");
 
 module.exports = mongoose.model("CreditCard", creditCardSchema);

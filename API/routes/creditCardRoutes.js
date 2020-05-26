@@ -158,6 +158,6 @@ router.put("/{creditCardName}", auth.isUser, creditCardController.updateCreditCa
  *       '500':
  *         description: Unexpected error.
  */
-router.delete("/{creditCardName}", auth.isUser, creditCardController.deleteCreditCard);
+router.delete("/:creditCardName", auth.isAuthed, creditCardController.deleteCreditCard);
 
 module.exports = router;
