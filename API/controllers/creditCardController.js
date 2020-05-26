@@ -41,7 +41,7 @@ exports.registerCreditCard = (req, res, next) => {
 };
 
 exports.getCreditCards = (req, res, next) => {
-    CreditCard.findById(res.locals.userId)
+    CreditCard.find({'user': res.locals.userId})
     .exec().then(creditCards => {
         if (!creditCards) {
             return res.status(204).json({
@@ -49,11 +49,13 @@ exports.getCreditCards = (req, res, next) => {
             });
         }
         else {
-            return creditCards;
+            res.status(200).json({
+                "Credit Cards": creditCards
+            })
         }
     }).catch(err => {
         return res.status(500).json({
-            error: err,
+            error: err.message,
         });
     });
 }
