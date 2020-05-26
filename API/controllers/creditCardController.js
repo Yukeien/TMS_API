@@ -1,4 +1,5 @@
 const CreditCard = require("../models/creditCardModel")
+const Address = require("../models/adressModel")
 
 exports.registerCreditCard = (req, res, next) => {
     const creditCardNumber = req.body.creditCardNumber;
@@ -17,24 +18,24 @@ exports.registerCreditCard = (req, res, next) => {
             cardType: req.body.cardType,
             creditCardNumber: req.body.creditCardNumber,
             expirationDate: req.body.expirationDate,
-            CCV: req.body.ccv,
-            billingAddress: req.body.billingAddress,
-            user: req.user._id
+            CCV: req.body.CCV,
+            billingAddress: new Address(req.body.billingAddress),
+            user: res.locals.userId
         })
 
-        newCreditCard.save().then(result => {
+        newCreditCard.save().then(creditCard => {
             return res.status(201).json({
                 message: "Credit Card successfully registered.",
-                submessage: result
+                caracteristics: creditCard
             });
         }).catch(err => {
             return res.status(500).json({
-                error: err
+                error: err.message
             });
         })
     }).catch(err => {
         return res.status(500).json({
-            error: err,
+            error: err.message,
         });
     });
 };

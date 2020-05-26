@@ -90,6 +90,34 @@
           },
           "billingAddress": {
             "$ref": "#/components/schemas/Address"
+          },
+          "status": {
+            "type": "boolean",
+            "example": "false"
+          }
+        }
+      },
+      "Bank Account": {
+        "type": "object",
+        "required": [
+          "country",
+          "IBAN"
+        ],
+        "properties": {
+          "country": {
+            "type": "string",
+            "example": "FR"
+          },
+          "IBAN": {
+            "type": "string",
+            "example": "FR76-"
+          },
+          "status": {
+            "type": "boolean",
+            "example": "false"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/User"
           }
         }
       },

@@ -62,7 +62,7 @@ const auth = require("../middlewares/auth");
  */
 router.post(
     "/",
-    auth.isUser,
+    auth.isAuthed,
     creditCardController.registerCreditCard
 );
 
@@ -82,7 +82,7 @@ router.post(
  *       '500':
  *         description: Unexpected error.
  */
-router.get("/", auth.isUser, creditCardController.getCreditCards)
+router.get("/", auth.isAuthed, creditCardController.getCreditCards)
 
 /**
  * @swagger

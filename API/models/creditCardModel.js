@@ -37,7 +37,8 @@ const creditCardSchema = new mongoose.Schema({
         required: true
     },
     billingAddress: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'Address',
         required: true
     },
     user: {
@@ -52,6 +53,7 @@ const creditCardSchema = new mongoose.Schema({
     }
 })
 
+const Address = require('./adressModel')
 const User = require("./userModel");
 
 module.exports = mongoose.model("CreditCard", creditCardSchema);
