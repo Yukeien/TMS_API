@@ -3,6 +3,8 @@ const router = express.Router();
 
 const creditCardController = require("../controllers/creditCardController")
 
+const auth = require("../middlewares/auth");
+
 /**
  * @swagger
  * /credit-cards:
@@ -22,28 +24,32 @@ const creditCardController = require("../controllers/creditCardController")
  *                 type: string
  *               cardHolderName:
  *                 type: string
+ *               cardType:
+ *                 type: string
  *               creditCardNumber:
  *                 type: Number
  *               expirationDate:
  *                 type: Number
  *               CCV:
  *                 type: Number
- *               userID:
- *                 type: string
+ *               billingAddress:
+ *                 type: String
  *           example:
- *             creditCardName: CurrentAccount
+ *             creditCardName: Mastercard-Family
  *             cardHolderName: Jane
+ *             cardType: Mastercard
  *             creditCardNumber: 4321567890121234
  *             expirationDate: 0898
  *             CCV: 233
- *             userID: Example1234%
+ *             billingAddress: 33 rue du Test, Champigny, 94500, France
  *         required:
  *           - creditCardName
  *           - cardHolderName
+ *           - cardType
  *           - creditCardNumber
  *           - expirationDate
  *           - CCV
- *           - userID
+ *           - billingAddress
  *     responses:
  *       '201':
  *         description: Credit Card successfully registered.
@@ -56,6 +62,7 @@ const creditCardController = require("../controllers/creditCardController")
  */
 router.post(
     "/credit-cards",
+    auth.isUser,
     creditCardController.registerCreditCard
 );
 
@@ -75,9 +82,54 @@ router.post(
  *       '500':
  *         description: Unexpected error.
  */
-router.get("/credit-cards", creditCardController.getCreditCard)
+router.get("/credit-cards", auth.isUser, creditCardController.getCreditCards)
 
-// router.put("/credit-card", creditCardController.updateCreditCard)
+/**
+ * @swagger
+ * /credit-cards/{creditCardName}:
+ *   get:
+ *     tags:
+ *       - Credit Cards
+ *     name: GetCreditCard
+ *     summary: Get a credit card by it's name
+ *     responses:
+ *       '200':
+ *         description: Credit card successfully retrieved.
+ *       '204':
+ *         description: No credit card registered on this user account.
+ *       '500':
+ *         description: Unexpected error.
+ */
+router.get("/credit-cards/{creditCard}", auth.isUser, creditCardController.getCreditCard)
+
+/**
+ * @swagger
+ * /credit-cards/{creditCardName}:
+ *   put:
+ *     tags:
+ *       - Credit Cards
+ *     name: UpdateCreditCard
+ *     summary: Update a credit card
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               creditCardName:
+ *                 type: string
+ *           example:
+ *             creditCardName: CompteCourant
+ *         required:
+ *           - creditCardName
+ *     responses:
+ *       '200':
+ *         description: Credit Card successfully updated.
+ *       '500':
+ *         description: Unexpected error.
+ */
+router.put("/credit-cards", auth.isUser, creditCardController.updateCreditCard)
 
 /**
  * @swagger
@@ -106,6 +158,6 @@ router.get("/credit-cards", creditCardController.getCreditCard)
  *       '500':
  *         description: Unexpected error.
  */
-router.delete("/credit-card", creditCardController.deleteCreditCard);
+router.delete("/credit-cards", auth.isUser, creditCardController.deleteCreditCard);
 
 module.exports = router;

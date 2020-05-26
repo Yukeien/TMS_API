@@ -1,4 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"), Schema = mongoose.Schema;
+
+//const cardTypes = require('./cardTypes')
 
 const creditCardSchema = new mongoose.Schema({
     creditCardName: {
@@ -11,6 +13,11 @@ const creditCardSchema = new mongoose.Schema({
         type: String,
         minLength: 2,
         maxLength: 25,
+        required: true
+    },
+    cardType: {
+        type: String,
+        enum: ['American Express', 'Mastercard', 'Visa', 'Maestro'],
         required: true
     },
     creditCardNumber: {
@@ -29,10 +36,22 @@ const creditCardSchema = new mongoose.Schema({
         length: 3,
         required: true
     },
-    userID: {
+    billingAddress: {
         type: String,
         required: true
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    status: {
+        type: Boolean,
+        default: false,
+        required: false
     }
 })
+
+const User = require("./userModel");
 
 module.exports = mongoose.model("CreditCard", creditCardSchema);

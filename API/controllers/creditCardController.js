@@ -10,13 +10,16 @@ exports.registerCreditCard = (req, res, next) => {
                 message: "This credit card is already used by an existing user."
             });
         }
+
         const newCreditCard = new CreditCard({
             creditCardName: req.body.creditCardName,
             cardHolderName: req.body.cardHolderName,
+            cardType: req.body.cardType,
             creditCardNumber: req.body.creditCardNumber,
             expirationDate: req.body.expirationDate,
             CCV: req.body.ccv,
-            userID: req.user._id
+            billingAddress: req.body.billingAddress,
+            user: req.user._id
         })
 
         newCreditCard.save().then(result => {
@@ -36,8 +39,8 @@ exports.registerCreditCard = (req, res, next) => {
     });
 };
 
-exports.getCreditCard = (req, res, next) => {
-    CreditCard.findById(req.user._id)
+exports.getCreditCards = (req, res, next) => {
+    CreditCard.findById(res.locals.userId)
     .exec().then(creditCards => {
         if (!creditCards) {
             return res.status(204).json({
@@ -54,8 +57,27 @@ exports.getCreditCard = (req, res, next) => {
     });
 }
 
+exports.getCreditCard = (req, res, next) => {
+    const creditCardName = req.params.creditCardName;
+    CreditCard.findById(creditCardName)
+    .exec().then(creditCard => {
+        if (!creditCard) {
+            return res.status(204).json({
+                message: "This credit card is not registered on this user account."
+            });
+        }
+        else {
+            return creditCard;
+        }
+    }).catch(err => {
+        return res.status(500).json({
+            error: err,
+        });
+    });
+}
+
 exports.updateCreditCard = (req, res, next) => {
-    CreditCard.findOneAndUpdate({ 'creditCardName' : req.body })
+    CreditCard.findOneAndUpdate({ 'creditCardName' : req.params.creditCardName })
     .then(result => {
         return result.status(200).json({
             message: "Credit Card successfully updated."
@@ -68,7 +90,7 @@ exports.updateCreditCard = (req, res, next) => {
 }
 
 exports.deleteCreditCard = (req, res, next) => {
-    const creditCardName = req.body.creditCardName;
+    const creditCardName = req.params.creditCardName;
     CreditCard.findOneAndDelete({ 'creditCardName' : creditCardName, 'userID': req.user._id })
     .then(result => {
         return result.status(200).json({
