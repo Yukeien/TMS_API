@@ -61,7 +61,7 @@ const auth = require("../middlewares/auth");
  *         description: Unexpected error.
  */
 router.post(
-    "/credit-cards",
+    "/",
     auth.isUser,
     creditCardController.registerCreditCard
 );
@@ -82,7 +82,7 @@ router.post(
  *       '500':
  *         description: Unexpected error.
  */
-router.get("/credit-cards", auth.isUser, creditCardController.getCreditCards)
+router.get("/", auth.isUser, creditCardController.getCreditCards)
 
 /**
  * @swagger
@@ -100,7 +100,7 @@ router.get("/credit-cards", auth.isUser, creditCardController.getCreditCards)
  *       '500':
  *         description: Unexpected error.
  */
-router.get("/credit-cards/{creditCard}", auth.isUser, creditCardController.getCreditCard)
+router.get("/{creditCardName}", auth.isUser, creditCardController.getCreditCard)
 
 /**
  * @swagger
@@ -129,7 +129,7 @@ router.get("/credit-cards/{creditCard}", auth.isUser, creditCardController.getCr
  *       '500':
  *         description: Unexpected error.
  */
-router.put("/credit-cards", auth.isUser, creditCardController.updateCreditCard)
+router.put("/{creditCardName}", auth.isUser, creditCardController.updateCreditCard)
 
 /**
  * @swagger
@@ -158,6 +158,6 @@ router.put("/credit-cards", auth.isUser, creditCardController.updateCreditCard)
  *       '500':
  *         description: Unexpected error.
  */
-router.delete("/credit-cards", auth.isUser, creditCardController.deleteCreditCard);
+router.delete("/{creditCardName}", auth.isUser, creditCardController.deleteCreditCard);
 
 module.exports = router;
