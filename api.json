@@ -1,0 +1,75 @@
+{
+  "info": {
+    "title": "TMSPay API Documentation",
+    "version": "1.0.0",
+    "description": "Endpoints of the TMSPay API."
+  },
+  "openapi": "3.0.0",
+  "host": "localhost:3000",
+  "basePath": "/",
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "required": "email",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "example": "Jane"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "jane.doe@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "example": "Example1234%"
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "street": {
+                "type": "string",
+                "example": "737 Malcolm X Blvd"
+              },
+              "zipcode": {
+                "type": "string",
+                "example": "10027"
+              },
+              "city": {
+                "type": "string",
+                "example": "New York"
+              },
+              "country": {
+                "type": "string",
+                "example": "United States"
+              }
+            }
+          },
+          "phoneNumber": {
+            "type": "string",
+            "example": "5165830787"
+          },
+          "birthDate": { 
+            "type": "string",
+            "example": "1997-05-07"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "name": "Authorization",
+        "scheme": "bearer",
+        "in": "header"
+      }
+    }
+  }
+}

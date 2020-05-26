@@ -12,26 +12,7 @@ const creditCardRoutes = require("./API/routes/creditCardRoutes")
 const { devDb, testingDb } = require("./config");
 
 //-------// SWAGGER DOCS //-------//
-const swaggerDefinition = {
-  info: {
-    title: "TMSPay API Documentation",
-    version: "1.0.0",
-    description: "Endpoints of the TMSPay API.",
-  },
-  openapi: "3.0.0",
-  host: "localhost:3000",
-  basePath: "/",
-  components: {
-    securitySchemes: {
-      bearerAuth: {
-        type: "http",
-        name: "Authorization",
-        scheme: "bearer",
-        in: "header",
-      },
-    },
-  },
-};
+const swaggerDefinition = require('./api.json');
 
 const options = {
   swaggerDefinition,
