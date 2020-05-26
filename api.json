@@ -11,7 +11,15 @@
     "schemas": {
       "User": {
         "type": "object",
-        "required": "email",
+        "required": [
+          "firstName",
+          "lastName",
+          "email",
+          "password",
+          "address",
+          "phoneNumber",
+          "birthDate"
+        ],
         "properties": {
           "firstName": {
             "type": "string",
@@ -32,25 +40,7 @@
             "example": "Example1234%"
           },
           "address": {
-            "type": "object",
-            "properties": {
-              "street": {
-                "type": "string",
-                "example": "737 Malcolm X Blvd"
-              },
-              "zipcode": {
-                "type": "string",
-                "example": "10027"
-              },
-              "city": {
-                "type": "string",
-                "example": "New York"
-              },
-              "country": {
-                "type": "string",
-                "example": "United States"
-              }
-            }
+            "$ref": "#/components/schemas/Address"
           },
           "phoneNumber": {
             "type": "string",
@@ -59,6 +49,74 @@
           "birthDate": { 
             "type": "string",
             "example": "1997-05-07"
+          }
+        }
+      },
+      "Credit Card": {
+        "type": "object",
+        "required": [
+          "creditCardName",
+          "cardHolderName",
+          "cardType",
+          "creditCardNumber",
+          "expirationDate",
+          "CCV",
+          "billingAddress"
+        ],
+        "properties": {
+          "creditCardName": {
+            "type": "string",
+            "example": "Mastercard-Family"
+          },
+          "cardHolderName": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "cardType": {
+            "type": "string",
+            "example": "Mastercard"
+          },
+          "creditCardNumber": {
+            "type": "string",
+            "example": "4321567890121234"
+          },
+          "expirationDate": {
+            "type": "number",
+            "example": "0898"
+          },
+          "CCV": {
+            "type": "number",
+            "example": "233"
+          },
+          "billingAddress": {
+            "$ref": "#/components/schemas/Address"
+          }
+        }
+      },
+      "Address": {
+        "type": "object",
+        "required": [
+          "street",
+          "zipcode",
+          "city",
+          "country"
+        ],
+        "properties": {
+          "street": {
+            "type": "string",
+            "example": "737 Malcolm X Blvd"
+          },
+          "zipcode": {
+            "type": "string",
+            "example": "10027"
+          },
+          "city": {
+            "type": "string",
+            "example": "New York"
+          },
+          "country": {
+            "type": "string",
+            "example": "United States"
           }
         }
       }
