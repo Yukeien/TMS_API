@@ -16,63 +16,7 @@ const auth = require("../middlewares/auth");
  *     name: Register
  *     summary: Register a new user
  *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               firstName:
- *                 type: string
- *               lastName:
- *                 type: string
- *               email:
- *                 type: string
- *                 format: email
- *               password:
- *                 type: string
- *               repeat_password:
- *                 type: string
- *               address:
- *                 type: object
- *                 properties:
- *                   street:
- *                     type: string
- *                   zipcode:
- *                     type: string
- *                   city:
- *                     type: string
- *                   country:
- *                     type: string
- *               phoneNumber:
- *                 type: string
- *               birthdate:
- *                 type: date
- *           example:
- *             firstName: Jane
- *             lastName: Doe
- *             email: jane.doe@gmail.com
- *             password: Example1234%
- *             repeat_password: Example1234%
- *             address:
- *               street: 737 Malcolm X Blvd
- *               zipcode: "10027"
- *               city: New York
- *               country: United States
- *             phoneNumber: "5165830787"
- *             birthdate: 1997-05-07
- *         required:
- *           - email
- *           - password
- *           - repeat_password
- *           - firstName
- *           - lastName
- *           - street
- *           - city
- *           - zipcode
- *           - country
- *           - phoneNumber
- *           - birthdate
+ *       $ref: '#/components/requestBodies/User'
  *     responses:
  *       '201':
  *         description: User successfully created.
@@ -98,23 +42,7 @@ router.post(
  *     name: Login
  *     summary: Logs a user in
  *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               email:
- *                 type: string
- *                 format: email
- *               password:
- *                 type: string
- *           example:
- *             email: jane.doe@gmail.com
- *             password: Example1234%
- *         required:
- *           - email
- *           - password
+ *       $ref: '#/components/requestBodies/UserCredentials'
  *     responses:
  *       '200':
  *         description: Auth successful.

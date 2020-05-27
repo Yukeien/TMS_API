@@ -14,42 +14,7 @@ const auth = require("../middlewares/auth");
  *     name: RegisterCreditCard
  *     summary: Register a new credit card
  *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               creditCardName:
- *                 type: string
- *               cardHolderName:
- *                 type: string
- *               cardType:
- *                 type: string
- *               creditCardNumber:
- *                 type: Number
- *               expirationDate:
- *                 type: Number
- *               CCV:
- *                 type: Number
- *               billingAddress:
- *                 type: String
- *           example:
- *             creditCardName: Mastercard-Family
- *             cardHolderName: Jane
- *             cardType: Mastercard
- *             creditCardNumber: 4321567890121234
- *             expirationDate: 0898
- *             CCV: 233
- *             billingAddress: 33 rue du Test, Champigny, 94500, France
- *         required:
- *           - creditCardName
- *           - cardHolderName
- *           - cardType
- *           - creditCardNumber
- *           - expirationDate
- *           - CCV
- *           - billingAddress
+ *       $ref: '#/components/requestBodies/Credit Card'
  *     responses:
  *       '201':
  *         description: Credit Card successfully registered.
@@ -115,32 +80,7 @@ router.get("/:creditCardName", auth.isAuthed, creditCardController.getCreditCard
  *     parameters:
  *       - $ref: '#/components/parameters/creditCardName'
  *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               creditCardName:
- *                 type: string
- *               cardHolderName:
- *                 type: string
- *               cardType:
- *                 type: string
- *               creditCardNumber:
- *                 type: number
- *               expirationDate:
- *                 type: number
- *               CCV:
- *                 type: number
- *           example:
- *             creditCardName: Mastercard-Family
- *             cardHolderName: Jane
- *             cardType: Mastercard
- *             creditCardNumber: 4321567890121234
- *             expirationDate: 0898
- *             CCV: 233
- *             billingAddress: 33 rue du Test, Champigny, 94500, France
+ *       $ref: '#/components/requestBodies/Credit Card'
  *     responses:
  *       '200':
  *         description: Credit Card successfully updated.

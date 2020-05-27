@@ -52,6 +52,25 @@
           }
         }
       },
+      "UserCredentials": {
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "jane.doe@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "example": "Example1234%"
+          }
+        }
+      },
       "Credit Card": {
         "type": "object",
         "required": [
@@ -90,10 +109,6 @@
           },
           "billingAddress": {
             "$ref": "#/components/schemas/Address"
-          },
-          "status": {
-            "type": "boolean",
-            "example": "false"
           }
         }
       },
@@ -163,6 +178,41 @@
         "required": "true",
         "schema": {
           "type": "string"
+        }
+      }
+    },
+    "requestBodies": {
+      "User": {
+        "description": "Json object containing the user infos",
+        "required": "true",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        }
+      },
+      "UserCredentials": {
+        "description": "Json object containing the user credentials",
+        "required": "true",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UserCredentials"
+            }
+          }
+        }
+      },
+      "Credit Card": {
+        "description": "Json object containing the credit card data",
+        "required": "true",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Credit Card"
+            }
+          }
         }
       }
     },
