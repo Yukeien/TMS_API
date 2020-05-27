@@ -38,6 +38,7 @@ if (process.env.NODE_ENV === "test") {
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
+mongoose.set('useFindAndModify', false);
 mongoose.connect(dbURI, {
   useCreateIndex: true,
   useNewUrlParser: true,

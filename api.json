@@ -149,6 +149,23 @@
         }
       }
     },
+    "parameters": {
+      "userId": {
+        "name": "userId",
+        "description": "User identifier",
+        "in": "path",
+        "required": "true"
+      },
+      "creditCardName": {
+        "name": "creditCardName",
+        "description": "Identifier of the credit card",
+        "in": "path",
+        "required": "true",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",

@@ -3,12 +3,12 @@ const Address = require("../models/addressModel")
 
 exports.registerCreditCard = (req, res, next) => {
     const creditCardNumber = req.body.creditCardNumber;
-    CreditCard.findOne({ creditCardNumber: creditCardNumber })
+    CreditCard.findOne({ creditCardNumber: creditCardNumber, 'user': res.locals.userId })
     .exec()
-    .then(creditCardNumber => {
-        if (creditCardNumber) {
+    .then(creditCard => {
+        if (creditCard) {
             return res.status(409).json({
-                message: "This credit card is already used by an existing user."
+                message: "This credit card is already registered."
             });
         }
 
@@ -43,13 +43,12 @@ exports.registerCreditCard = (req, res, next) => {
 exports.getCreditCards = (req, res, next) => {
     CreditCard.find({'user': res.locals.userId})
     .exec().then(creditCards => {
-        if (!creditCards) {
-            return res.status(204).json({
+        if (!creditCards || !creditCards.length) {
+            return res.status(200).json({
                 message: "No credit card registered on this user account."
             });
-        }
-        else {
-            res.status(200).json({
+        } else {
+            return res.status(200).json({
                 "Credit Cards": creditCards
             })
         }
@@ -62,32 +61,41 @@ exports.getCreditCards = (req, res, next) => {
 
 exports.getCreditCard = (req, res, next) => {
     const creditCardName = req.params.creditCardName;
-    CreditCard.findById(creditCardName)
+    CreditCard.findOne({'creditCardName': creditCardName, 'user': res.locals.userId})
     .exec().then(creditCard => {
-        if (!creditCard) {
+        try {
+            if (!creditCard) {
+                return res.status(200).json({
+                    message: "There is no corresponding credit card." 
+                })
+            } else {
+                return res.status(200).json({
+                    "Credit Card": creditCard
+                })
+            }
+        } catch(error) {
             return res.status(204).json({
-                message: "This credit card is not registered on this user account."
+                message: "This credit card is not registered on this user account.",
+                error: error.message
             });
-        }
-        else {
-            return creditCard;
         }
     }).catch(err => {
         return res.status(500).json({
-            error: err,
+            error: err.message,
         });
     });
 }
 
 exports.updateCreditCard = (req, res, next) => {
-    CreditCard.findOneAndUpdate({ 'creditCardName' : req.params.creditCardName })
-    .then(result => {
-        return result.status(200).json({
+    const creditCardName = req.params.creditCardName;
+    CreditCard.findOneAndUpdate({ 'creditCardName' : creditCardName, 'user': res.locals.userId }, req.body)
+    .then(() => {
+        return res.status(200).json({
             message: "Credit Card successfully updated."
         });
     }).catch(err => {
         return res.status(500).json({
-            error: err,
+            error: err.message,
         });
     });
 }
@@ -96,9 +104,15 @@ exports.deleteCreditCard = (req, res, next) => {
     const creditCardName = req.params.creditCardName;
     CreditCard.findOneAndDelete({ 'creditCardName' : creditCardName, 'user': res.locals.userId })
     .then(result => {
-        return res.status(200).json({
-            message: "Credit Card - " + result.creditCardName + " successfully deleted.",
-        });
+        if (!result) {
+            return res.status(200).json({
+                message: "This credit card is not registered on this user account."
+            });
+        } else {
+            return res.status(200).json({
+                message: "Credit Card - " + result.creditCardName + " successfully deleted.",
+            });
+        }
     }).catch(err => {
         return res.status(500).json({
             error: err.message,

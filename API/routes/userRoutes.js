@@ -136,9 +136,7 @@ router.post("/login", UserController.login);
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: userId
- *         required: true
+ *       - $ref: '#/components/parameters/userId'
  *     responses:
  *       '200':
  *         description: Profile retrieved successfully.

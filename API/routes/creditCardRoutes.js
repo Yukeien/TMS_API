@@ -73,7 +73,7 @@ router.post(
  *     tags:
  *       - Credit Cards
  *     name: GetCreditCards
- *     summary: Get user's credit cards
+ *     summary: List user's credit cards
  *     responses:
  *       '200':
  *         description: Credit card(s) successfully retrieved.
@@ -92,6 +92,8 @@ router.get("/", auth.isAuthed, creditCardController.getCreditCards)
  *       - Credit Cards
  *     name: GetCreditCard
  *     summary: Get a credit card by it's name
+ *     parameters:
+ *       - $ref: '#/components/parameters/creditCardName'
  *     responses:
  *       '200':
  *         description: Credit card successfully retrieved.
@@ -100,7 +102,7 @@ router.get("/", auth.isAuthed, creditCardController.getCreditCards)
  *       '500':
  *         description: Unexpected error.
  */
-router.get("/{creditCardName}", auth.isUser, creditCardController.getCreditCard)
+router.get("/:creditCardName", auth.isAuthed, creditCardController.getCreditCard)
 
 /**
  * @swagger
@@ -110,6 +112,8 @@ router.get("/{creditCardName}", auth.isUser, creditCardController.getCreditCard)
  *       - Credit Cards
  *     name: UpdateCreditCard
  *     summary: Update a credit card
+ *     parameters:
+ *       - $ref: '#/components/parameters/creditCardName'
  *     requestBody:
  *       required: true
  *       content:
@@ -119,17 +123,31 @@ router.get("/{creditCardName}", auth.isUser, creditCardController.getCreditCard)
  *             properties:
  *               creditCardName:
  *                 type: string
+ *               cardHolderName:
+ *                 type: string
+ *               cardType:
+ *                 type: string
+ *               creditCardNumber:
+ *                 type: number
+ *               expirationDate:
+ *                 type: number
+ *               CCV:
+ *                 type: number
  *           example:
- *             creditCardName: CompteCourant
- *         required:
- *           - creditCardName
+ *             creditCardName: Mastercard-Family
+ *             cardHolderName: Jane
+ *             cardType: Mastercard
+ *             creditCardNumber: 4321567890121234
+ *             expirationDate: 0898
+ *             CCV: 233
+ *             billingAddress: 33 rue du Test, Champigny, 94500, France
  *     responses:
  *       '200':
  *         description: Credit Card successfully updated.
  *       '500':
  *         description: Unexpected error.
  */
-router.put("/{creditCardName}", auth.isUser, creditCardController.updateCreditCard)
+router.put("/:creditCardName", auth.isAuthed, creditCardController.updateCreditCard)
 
 /**
  * @swagger
@@ -139,19 +157,8 @@ router.put("/{creditCardName}", auth.isUser, creditCardController.updateCreditCa
  *       - Credit Cards
  *     name: DeleteCreditCard
  *     summary: Delete a credit card
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               creditCardName:
- *                 type: string
- *           example:
- *             creditCardName: CompteCourant
- *         required:
- *           - creditCardName
+ *     parameters:
+ *       - $ref: '#/components/parameters/creditCardName'
  *     responses:
  *       '200':
  *         description: Credit Card successfully deleted.
