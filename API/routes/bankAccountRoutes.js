@@ -31,4 +31,22 @@ router.post(
     bankAccountController.registerBankAccount
 );
 
+/**
+ * @swagger
+ * /banks:
+ *   get:
+ *     tags:
+ *       - Bank Accounts
+ *     name: GetBankAccounts
+ *     summary: List user's bank accounts
+ *     responses:
+ *       '200':
+ *         description: Bank account(s) successfully retrieved.
+ *       '204':
+ *         description: No bank account registered on this account.
+ *       '500':
+ *         description: Unexpected error.
+ */
+router.get("/", auth.isAuthed, bankAccountController.getBanks)
+
 module.exports = router;

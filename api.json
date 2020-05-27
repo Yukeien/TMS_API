@@ -121,11 +121,11 @@
         "properties": {
           "country": {
             "type": "string",
-            "example": "FR"
+            "example": "France"
           },
           "IBAN": {
             "type": "string",
-            "example": "FR76-"
+            "example": "FR7618228790123490451456098"
           }
         }
       },

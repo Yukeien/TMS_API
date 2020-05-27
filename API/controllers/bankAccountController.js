@@ -32,3 +32,22 @@ exports.registerBankAccount = (req, res, next) => {
         });
     });
 };
+
+exports.getBanks = (req, res, next) => {
+    BankAccount.find({'owner': res.locals.userId})
+    .exec().then(bankAccounts => {
+        if (!bankAccounts || !bankAccounts.length) {
+            return res.status(200).json({
+                message: "No credit card registered on this user account."
+            });
+        } else {
+            return res.status(200).json({
+                "Banks": bankAccounts
+            })
+        }
+    }).catch(err => {
+        return res.status(500).json({
+            error: err.message,
+        });
+    });
+}
