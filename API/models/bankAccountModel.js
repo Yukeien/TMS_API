@@ -1,11 +1,11 @@
 const mongoose = require("mongoose"), Schema = mongoose.Schema;
 
-//const countriesList = require('./contriesList')
+const countriesList = ['France', 'Germany', 'United Kingdom', 'United States', 'Canada', 'Italy'];
 
 const bankAccountSchema = new mongoose.Schema({
     country: {
         type: String,
-        //enum: [countriesList],
+        enum: countriesList,
         required: true
     },
     IBAN: {
