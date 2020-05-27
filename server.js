@@ -7,7 +7,8 @@ const express = require("express"),
   swaggerJSDoc = require("swagger-jsdoc");
 
 const userRoutes = require("./API/routes/userRoutes"); // Importing route
-const creditCardRoutes = require("./API/routes/creditCardRoutes")
+const creditCardRoutes = require("./API/routes/creditCardRoutes");
+const bankAccountRoutes = require("./API/routes/bankAccountRoutes");
 
 const { devDb, testingDb } = require("./config");
 
@@ -65,6 +66,7 @@ app.use((req, res, next) => {
 
 app.use("/users", userRoutes); // register the route
 app.use("/credit-cards", creditCardRoutes);
+app.use("/banks", bankAccountRoutes);
 
 app.use(function (req, res) {
   res.status(404).send({ url: req.originalUrl + " not found" });

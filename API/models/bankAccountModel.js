@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"), Schema = mongoose.Schema;
 
 //const countriesList = require('./contriesList')
 
@@ -14,12 +14,12 @@ const bankAccountSchema = new mongoose.Schema({
         maxlength: 27,
         required: true
     },
-    Status: {
+    status: {
         type: String,
-        default: 'Unverified',
+        default: false,
         required: true,
     },
-    Owner: {
+    owner: {
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true

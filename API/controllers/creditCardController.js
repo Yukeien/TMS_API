@@ -3,7 +3,7 @@ const Address = require("../models/addressModel")
 
 exports.registerCreditCard = (req, res, next) => {
     const creditCardNumber = req.body.creditCardNumber;
-    CreditCard.findOne({ creditCardNumber: creditCardNumber, 'user': res.locals.userId })
+    CreditCard.findOne({ creditCardNumber: creditCardNumber, 'owner': res.locals.userId })
     .exec()
     .then(creditCard => {
         if (creditCard) {
@@ -20,13 +20,12 @@ exports.registerCreditCard = (req, res, next) => {
             expirationDate: req.body.expirationDate,
             CCV: req.body.CCV,
             billingAddress: new Address(req.body.billingAddress),
-            user: res.locals.userId
+            owner: res.locals.userId
         })
 
         newCreditCard.save().then(creditCard => {
             return res.status(201).json({
                 message: "Credit Card successfully registered.",
-                caracteristics: creditCard
             });
         }).catch(err => {
             return res.status(500).json({
@@ -41,7 +40,7 @@ exports.registerCreditCard = (req, res, next) => {
 };
 
 exports.getCreditCards = (req, res, next) => {
-    CreditCard.find({'user': res.locals.userId})
+    CreditCard.find({'owner': res.locals.userId})
     .exec().then(creditCards => {
         if (!creditCards || !creditCards.length) {
             return res.status(200).json({
@@ -61,7 +60,7 @@ exports.getCreditCards = (req, res, next) => {
 
 exports.getCreditCard = (req, res, next) => {
     const creditCardName = req.params.creditCardName;
-    CreditCard.findOne({'creditCardName': creditCardName, 'user': res.locals.userId})
+    CreditCard.findOne({'creditCardName': creditCardName, 'owner': res.locals.userId})
     .exec().then(creditCard => {
         try {
             if (!creditCard) {
@@ -88,7 +87,7 @@ exports.getCreditCard = (req, res, next) => {
 
 exports.updateCreditCard = (req, res, next) => {
     const creditCardName = req.params.creditCardName;
-    CreditCard.findOneAndUpdate({ 'creditCardName' : creditCardName, 'user': res.locals.userId }, req.body)
+    CreditCard.findOneAndUpdate({ 'creditCardName' : creditCardName, 'owner': res.locals.userId }, req.body)
     .then(() => {
         return res.status(200).json({
             message: "Credit Card successfully updated."
@@ -102,11 +101,11 @@ exports.updateCreditCard = (req, res, next) => {
 
 exports.deleteCreditCard = (req, res, next) => {
     const creditCardName = req.params.creditCardName;
-    CreditCard.findOneAndDelete({ 'creditCardName' : creditCardName, 'user': res.locals.userId })
+    CreditCard.findOneAndDelete({ 'creditCardName' : creditCardName, 'owner': res.locals.userId })
     .then(result => {
         if (!result) {
             return res.status(200).json({
-                message: "This credit card is not registered on this user account."
+                message: "This credit card is not registered on this account."
             });
         } else {
             return res.status(200).json({

@@ -41,7 +41,7 @@ const creditCardSchema = new mongoose.Schema({
         ref: 'Address',
         required: true
     },
-    user: {
+    owner: {
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true

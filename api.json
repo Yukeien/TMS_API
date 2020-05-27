@@ -126,13 +126,6 @@
           "IBAN": {
             "type": "string",
             "example": "FR76-"
-          },
-          "status": {
-            "type": "boolean",
-            "example": "false"
-          },
-          "owner": {
-            "$ref": "#/components/schemas/User"
           }
         }
       },
@@ -211,6 +204,17 @@
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/Credit Card"
+            }
+          }
+        }
+      },
+      "Bank Account": {
+        "description": "Json object containing the bank account data",
+        "required": "true",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Bank Account"
             }
           }
         }
