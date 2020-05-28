@@ -1,0 +1,232 @@
+{
+  "info": {
+    "title": "TMSPay API Documentation",
+    "version": "1.0.0",
+    "description": "Endpoints of the TMSPay API."
+  },
+  "openapi": "3.0.0",
+  "host": "localhost:3000",
+  "basePath": "/",
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "required": [
+          "firstName",
+          "lastName",
+          "email",
+          "password",
+          "address",
+          "phoneNumber",
+          "birthDate"
+        ],
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "example": "Jane"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "jane.doe@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "example": "Example1234%"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "example": "5165830787"
+          },
+          "birthDate": { 
+            "type": "string",
+            "example": "1997-05-07"
+          }
+        }
+      },
+      "UserCredentials": {
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "jane.doe@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "example": "Example1234%"
+          }
+        }
+      },
+      "Credit Card": {
+        "type": "object",
+        "required": [
+          "creditCardName",
+          "cardHolderName",
+          "cardType",
+          "creditCardNumber",
+          "expirationDate",
+          "CCV",
+          "billingAddress"
+        ],
+        "properties": {
+          "creditCardName": {
+            "type": "string",
+            "example": "Mastercard-Family"
+          },
+          "cardHolderName": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "cardType": {
+            "type": "string",
+            "example": "Mastercard"
+          },
+          "creditCardNumber": {
+            "type": "string",
+            "example": "4321567890121234"
+          },
+          "expirationDate": {
+            "type": "number",
+            "example": "0898"
+          },
+          "CCV": {
+            "type": "number",
+            "example": "233"
+          },
+          "billingAddress": {
+            "$ref": "#/components/schemas/Address"
+          }
+        }
+      },
+      "Bank Account": {
+        "type": "object",
+        "required": [
+          "country",
+          "IBAN"
+        ],
+        "properties": {
+          "country": {
+            "type": "string",
+            "example": "France"
+          },
+          "IBAN": {
+            "type": "string",
+            "example": "FR7618228790123490451456098"
+          }
+        }
+      },
+      "Address": {
+        "type": "object",
+        "required": [
+          "street",
+          "zipcode",
+          "city",
+          "country"
+        ],
+        "properties": {
+          "street": {
+            "type": "string",
+            "example": "737 Malcolm X Blvd"
+          },
+          "zipcode": {
+            "type": "string",
+            "example": "10027"
+          },
+          "city": {
+            "type": "string",
+            "example": "New York"
+          },
+          "country": {
+            "type": "string",
+            "example": "United States"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "userId": {
+        "name": "userId",
+        "description": "User identifier",
+        "in": "path",
+        "required": "true"
+      },
+      "creditCardName": {
+        "name": "creditCardName",
+        "description": "Identifier of the credit card",
+        "in": "path",
+        "required": "true",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "requestBodies": {
+      "User": {
+        "description": "Json object containing the user infos",
+        "required": "true",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        }
+      },
+      "UserCredentials": {
+        "description": "Json object containing the user credentials",
+        "required": "true",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UserCredentials"
+            }
+          }
+        }
+      },
+      "Credit Card": {
+        "description": "Json object containing the credit card data",
+        "required": "true",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Credit Card"
+            }
+          }
+        }
+      },
+      "Bank Account": {
+        "description": "Json object containing the bank account data",
+        "required": "true",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Bank Account"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "name": "Authorization",
+        "scheme": "bearer",
+        "in": "header"
+      }
+    }
+  }
+}

@@ -7,30 +7,13 @@ const express = require("express"),
   swaggerJSDoc = require("swagger-jsdoc");
 
 const userRoutes = require("./API/routes/userRoutes"); // Importing route
+const creditCardRoutes = require("./API/routes/creditCardRoutes");
+const bankAccountRoutes = require("./API/routes/bankAccountRoutes");
 
 const { devDb, testingDb } = require("./config");
 
 //-------// SWAGGER DOCS //-------//
-const swaggerDefinition = {
-  info: {
-    title: "TMSPay API Documentation",
-    version: "1.0.0",
-    description: "Endpoints of the TMSPay API.",
-  },
-  openapi: "3.0.0",
-  host: "localhost:3000",
-  basePath: "/",
-  components: {
-    securitySchemes: {
-      bearerAuth: {
-        type: "http",
-        name: "Authorization",
-        scheme: "bearer",
-        in: "header",
-      },
-    },
-  },
-};
+const swaggerDefinition = require('./api.json');
 
 const options = {
   swaggerDefinition,
@@ -56,6 +39,7 @@ if (process.env.NODE_ENV === "test") {
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
+mongoose.set('useFindAndModify', false);
 mongoose.connect(dbURI, {
   useCreateIndex: true,
   useNewUrlParser: true,
@@ -81,6 +65,8 @@ app.use((req, res, next) => {
 });
 
 app.use("/users", userRoutes); // register the route
+app.use("/credit-cards", creditCardRoutes);
+app.use("/banks", bankAccountRoutes);
 
 app.use(function (req, res) {
   res.status(404).send({ url: req.originalUrl + " not found" });
