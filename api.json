@@ -224,6 +224,32 @@
             }
           }
         }
+      },
+      "Deposit Card": {
+        "description": "Json object containing the credit card name and the money amount to deposit.",
+        "required": "true",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "creditCardName",
+                "amount"
+              ],
+              "properties": {
+                "creditCardName": {
+                  "type": "string",
+                  "example": "Mastercard-Family"
+                },
+                "amount": {
+                  "type": "number",
+                  "example": 150
+                }
+              }
+            }
+          }
+        }
+
       }
     },
     "securitySchemes": {
