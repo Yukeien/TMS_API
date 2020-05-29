@@ -88,10 +88,23 @@ exports.getCreditCard = (req, res, next) => {
 exports.updateCreditCard = (req, res, next) => {
     const creditCardName = req.params.creditCardName;
     CreditCard.findOneAndUpdate({ 'creditCardName' : creditCardName, 'owner': res.locals.userId }, req.body)
-    .then(() => {
-        return res.status(200).json({
-            message: "Credit Card successfully updated."
-        });
+    .then(creditCard => {
+        try {
+            if (!creditCard) {
+                return res.status(200).json({
+                    message: "There is no corresponding credit card." 
+                })
+            } else {
+                return res.status(200).json({
+                    message: "Credit Card successfully updated."
+                })
+            }
+        } catch(error) {
+            return res.status(204).json({
+                message: "This credit card is not registered on this user account.",
+                error: error.message
+            });
+        }
     }).catch(err => {
         return res.status(500).json({
             error: err.message,
