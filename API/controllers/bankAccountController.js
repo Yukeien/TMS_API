@@ -38,7 +38,7 @@ exports.getBanks = (req, res, next) => {
     .exec().then(bankAccounts => {
         if (!bankAccounts || !bankAccounts.length) {
             return res.status(200).json({
-                message: "No credit card registered on this user account."
+                message: "No bank account registered on this user account."
             });
         } else {
             return res.status(200).json({

@@ -7,6 +7,30 @@ const auth = require("../middlewares/auth");
 
 /**
  * @swagger
+ * /vault/deposit-bank:
+ *   post:
+ *     tags:
+ *       - Vault
+ *     name: AddMoneyFromBank
+ *     summary: Add money to user's portfolio
+ *     requestBody:
+ *       $ref: '#/components/requestBodies/Deposit Bank'
+ *     responses:
+ *       '201':
+ *         description: Money successfully added.
+ *       '422':
+ *         description: Submitted data is incorrect.
+ *       '500':
+ *         description: Unexpected error.
+ */
+router.post(
+    "/deposit-bank",
+    auth.isAuthed,
+    vaultController.addMoneyFromBank
+);
+
+/**
+ * @swagger
  * /vault/deposit-card:
  *   post:
  *     tags:

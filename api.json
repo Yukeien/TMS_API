@@ -250,6 +250,32 @@
           }
         }
 
+      },
+      "Deposit Bank": {
+        "description": "Json object containing an IBAN and the money amount to deposit.",
+        "required": "true",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "IBAN",
+                "amount"
+              ],
+              "properties": {
+                "IBAN": {
+                  "type": "string",
+                  "example": "FR7618228790123490451456098"
+                },
+                "amount": {
+                  "type": "number",
+                  "example": 150
+                }
+              }
+            }
+          }
+        }
+
       }
     },
     "securitySchemes": {
