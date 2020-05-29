@@ -6,9 +6,12 @@ const express = require("express"),
   swaggerUi = require("swagger-ui-express"),
   swaggerJSDoc = require("swagger-jsdoc");
 
-const userRoutes = require("./API/routes/userRoutes"); // Importing route
+// Importing route
+const userRoutes = require("./API/routes/userRoutes");
 const creditCardRoutes = require("./API/routes/creditCardRoutes");
 const bankAccountRoutes = require("./API/routes/bankAccountRoutes");
+const vaultRoutes = require("./API/routes/vaultRoutes");
+const transferRoutes = require("./API/routes/transferRoutes");
 
 const { devDb, testingDb } = require("./config");
 
@@ -64,9 +67,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/users", userRoutes); // register the route
+// Register the routes
+app.use("/users", userRoutes);
 app.use("/credit-cards", creditCardRoutes);
 app.use("/banks", bankAccountRoutes);
+app.use("/vault", vaultRoutes);
+app.use("/transfer", transferRoutes);
 
 app.use(function (req, res) {
   res.status(404).send({ url: req.originalUrl + " not found" });

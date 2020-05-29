@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const Vault = require("../models/vaultModel");
 const jwt = require("jsonwebtoken");
 const { jwtKey } = require("../../config");
 
@@ -29,7 +30,9 @@ exports.signup = (req, res, next) => {
       });
       newUser
         .save()
-        .then(result => {
+        .then(async result => {
+          await new Vault({ owner: result }).save();
+
           return res.status(201).json({
             message: "User successfully created.",
           });

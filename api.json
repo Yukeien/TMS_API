@@ -16,6 +16,7 @@
           "lastName",
           "email",
           "password",
+          "repeat_password",
           "address",
           "phoneNumber",
           "birthDate"
@@ -39,6 +40,11 @@
             "format": "password",
             "example": "Example1234%"
           },
+          "repeat_password": {
+            "type": "string",
+            "format": "password",
+            "example": "Example1234%"
+          },
           "address": {
             "$ref": "#/components/schemas/Address"
           },
@@ -46,7 +52,7 @@
             "type": "string",
             "example": "5165830787"
           },
-          "birthDate": { 
+          "birthdate": { 
             "type": "string",
             "example": "1997-05-07"
           }

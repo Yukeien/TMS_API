@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 const crypto = require("crypto");
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
     minLength: 2,
@@ -67,7 +68,7 @@ const userSchema = mongoose.Schema({
   createdOn: {
     type: Date,
     default: Date.now,
-  },
+  }
 });
 
 userSchema.methods.encryptPassword = function (password) {
