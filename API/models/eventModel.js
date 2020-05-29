@@ -7,7 +7,7 @@ const eventSchema = new mongoose.Schema({
         required: true
     },
     relativeId: {
-        type: Number,
+        type: String,
         required: true
     },
     processed: {

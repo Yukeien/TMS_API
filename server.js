@@ -80,6 +80,10 @@ app.use(function (req, res) {
 
 app.listen(port);
 
+async function main() {
+  await _useWorker('./API/workers/handleEvents.js');
+}
+
 console.log("[START] TMSPay API started on port " + port);
 
 module.exports = app;

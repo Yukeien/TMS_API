@@ -34,7 +34,9 @@ router.get(
  *     tags:
  *       - Transfer
  *     name: RegisterUserNewTransfer
- *     summary: Request a new transfer for the user
+ *     summary: Request a new transfer for the user.
+ *     requestBody:
+ *       $ref: '#/components/requestBodies/TransferRegister'
  *     responses:
  *       '201':
  *         description: Transfer request created.
