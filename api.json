@@ -77,6 +77,24 @@
           }
         }
       },
+      "TransferRegister": {
+        "type": "object",
+        "required": [
+          "receiverEmail",
+          "amount"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "jane.doe@gmail.com"
+          },
+          "amount": {
+            "type": "number",
+            "example": "123"
+          }
+        }
+      },
       "Credit Card": {
         "type": "object",
         "required": [

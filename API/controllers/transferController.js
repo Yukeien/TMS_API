@@ -1,8 +1,9 @@
 const Transfer = require("../models/transferModel");
 const User = require("../models/userModel");
+const Event = require("../miscellaneous/eventUtils");
 
 exports.registerTransfer = async (req, res, next) => {
-    const receiver = await User.find({ email: req.body.receiverEmail });
+    const receiver = await User.findOne({ email: req.body.receiverEmail });
 
     if (!receiver) {
         return res.status(404).json({
@@ -12,11 +13,13 @@ exports.registerTransfer = async (req, res, next) => {
 
     Transfer.create({
         "sender": res.locals.userId,
-        "receiver": receiver,
+        "receiver": receiver._id,
         "amount": req.body.amount
     })
     .then(transfer => {
         if (transfer) {
+            Event.registerNewEvent("transfer", transfer._id);
+
             return res.status(201).json({
                 message: "Transfer query registered",
             });
@@ -33,7 +36,7 @@ exports.registerTransfer = async (req, res, next) => {
 };
 
 exports.getTransfers = (req, res, next) => {
-    Transfer.find({'owner': res.locals.userId})
+    Transfer.find({'sender': res.locals.userId})
     .exec().then(transfers => {
         if (!transfers) {
             return res.status(404).json({
